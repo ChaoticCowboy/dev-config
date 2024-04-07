@@ -1,8 +1,15 @@
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
  
-Install-Module PSReadLine 
-Import-Module -Name Terminal-Icons
+Install-Module PSReadLine
+if (Get-Module -ListAvailable -Name Terminal-Icons) {
+    Import-Module -Name Terminal-Icons
+} 
+else {
+    Write-Host "Terminal-Icons was not found, installing..."
+    Install-Module -Name Terminal-Icons -Repository PSGallery
+}
+
 set-alias desktop "Desktop.ps1"
 
 # Oh My Posh requires the Environment Varible POSH_THEMES_PATH to point to valid omp.json folder
